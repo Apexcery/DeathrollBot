@@ -18,19 +18,19 @@ namespace DeathrollBot.Commands
                     await ReplyAsync("The entered max roll could not be parsed (make sure it is a whole number).");
                     return;
                 }
+
+                if (maxRollAsInt < 1)
+                {
+                    await ReplyAsync("The entered max roll should be more than 1.");
+                    return;
+                }
             }
 
             var random = new Random();
 
             var rollResult = random.Next(1, maxRollAsInt);
 
-            if (rollResult == 1)
-            {
-                await ReplyAsync("You lost! :(");
-                return;
-            }
-
-            await ReplyAsync($"You rolled: {rollResult} (max: {maxRollAsInt})");
+            await ReplyAsync($"You rolled: {rollResult} (max: {maxRollAsInt}){(rollResult == 1 ? " You Lost! :(" : "")}");
         }
     }
 }
