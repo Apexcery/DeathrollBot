@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeathrollBot", "DeathrollBot\DeathrollBot.csproj", "{E33A4CAC-45E5-48E9-BA0B-4D5725AFB5FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E33A4CAC-45E5-48E9-BA0B-4D5725AFB5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33A4CAC-45E5-48E9-BA0B-4D5725AFB5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33A4CAC-45E5-48E9-BA0B-4D5725AFB5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33A4CAC-45E5-48E9-BA0B-4D5725AFB5FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0E4CB7E-1500-4F78-9528-79088F76D2C4}
+	EndGlobalSection
+EndGlobal
