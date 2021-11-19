@@ -15,14 +15,20 @@ namespace DeathrollBot.Commands
                 var parsed = int.TryParse(maxRoll, out maxRollAsInt);
                 if (!parsed)
                 {
-                    await ReplyAsync("The entered max roll could not be parsed (make sure it is a number).");
+                    await ReplyAsync("The entered max roll could not be parsed (make sure it is a whole number).");
                     return;
                 }
             }
 
             var random = new Random();
 
-            var rollResult = random.Next(maxRollAsInt);
+            var rollResult = random.Next(1, maxRollAsInt);
+
+            if (rollResult == 1)
+            {
+                await ReplyAsync("You lost! :(");
+                return;
+            }
 
             await ReplyAsync($"You rolled: {rollResult} (max: {maxRollAsInt})");
         }

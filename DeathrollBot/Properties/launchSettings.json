@@ -4,8 +4,11 @@
       "commandName": "Project",
       "environmentVariables": {
         "prefix": ".",
-        "token": "OTExMDcyMTMzNDE1ODMzNjQx.YZcECw.KtBwhGD-UyKI7a4jKWJghI1OgtA"
+        "token": ""
       }
+    },
+    "Docker": {
+      "commandName": "Docker"
     }
   }
 }
