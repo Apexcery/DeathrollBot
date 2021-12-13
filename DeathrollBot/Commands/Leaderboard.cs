@@ -34,7 +34,7 @@ namespace DeathrollBot.Commands
             for (var i = 0; i < Math.Min(5, currentScores.Count); i++)
             {
                 var user = Context.Guild.GetUser(currentScores[i].UserId);
-                embed.AddField($"{user.Username}", $"Score: {currentScores[i].CurrentScore}");
+                embed.AddField($"{(string.IsNullOrEmpty(user.Nickname) ? user.Username : user.Nickname)}", $"Score: {currentScores[i].CurrentScore}");
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
