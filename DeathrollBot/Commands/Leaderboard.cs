@@ -19,7 +19,7 @@ namespace DeathrollBot.Commands
         [Command("leaderboard"), Alias("lb", "top")]
         public async Task ShowLeaderboard()
         {
-            var currentScores = await _leaderboardService.GetLeaderboard();
+            var currentScores = await _leaderboardService.GetLeaderboard(Context.Guild);
 
             if (!currentScores.Any())
             {

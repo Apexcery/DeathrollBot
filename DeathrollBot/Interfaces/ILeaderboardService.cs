@@ -7,7 +7,7 @@ namespace DeathrollBot.Interfaces
 {
     public interface ILeaderboardService
     {
-        public Task<List<Score>> GetLeaderboard();
-        public Task IncrementUser(IUser user);
+        public Task<List<Score>> GetLeaderboard(IGuild server);
+        public Task IncrementUser(IUser user, IGuild server);
     }
 }

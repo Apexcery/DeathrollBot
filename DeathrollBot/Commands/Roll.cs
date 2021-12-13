@@ -81,7 +81,7 @@ namespace DeathrollBot.Commands
 
                 CurrentChallenges.Remove(currentChallenge);
 
-                await _leaderboardService.IncrementUser(winner);
+                await _leaderboardService.IncrementUser(winner, Context.Guild);
             }
 
             currentChallenge.CurrentMaxRoll = rollResult;

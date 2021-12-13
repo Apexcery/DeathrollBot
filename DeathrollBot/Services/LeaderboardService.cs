@@ -11,7 +11,8 @@ namespace DeathrollBot.Services
 {
     public class LeaderboardService : ILeaderboardService
     {
-        private List<Score> Scores = new();
+        private List<ServerScores> ServerScores = new();
+        // private List<Score> Scores = new();
 
         public LeaderboardService()
         {
@@ -22,41 +23,62 @@ namespace DeathrollBot.Services
                 SaveLeaderboard().Wait();
         }
 
-        public async Task<List<Score>> GetLeaderboard()
+        public async Task<List<Score>> GetLeaderboard(IGuild server)
         {
             await UpdateLeaderboard();
-            return Scores.OrderByDescending(x => x.CurrentScore).ToList();
+            var scores = ServerScores.FirstOrDefault(x => x.ServerId == server.Id)?.UserScores ?? new List<Score>();
+            return scores.OrderByDescending(x => x.CurrentScore).ToList();
         }
 
-        public async Task IncrementUser(IUser user)
+        public async Task IncrementUser(IUser user, IGuild server)
         {
-            if (Scores.All(s => s.UserId != user.Id))
+            var serverScores = ServerScores.FirstOrDefault(x => x.ServerId == server.Id);
+            if (serverScores == null)
             {
-                Scores.Add(new Score
+                ServerScores.Add(new ServerScores
+                {
+                    ServerId = server.Id,
+                    UserScores = new List<Score>()
+                });
+
+                serverScores = ServerScores.First(x => x.ServerId == server.Id);
+            }
+            var scores = serverScores.UserScores ?? new List<Score>();
+            var indexToUpdate = ServerScores.FindIndex(x => x.ServerId == server.Id);
+            if (scores.All(s => s.UserId != user.Id))
+            {
+                scores.Add(new Score
                 {
                     UserId = user.Id,
+                    Username = user.Username,
                     CurrentScore = 1
                 });
+
+                if (indexToUpdate != -1)
+                    ServerScores[indexToUpdate].UserScores = scores;
 
                 await SaveLeaderboard();
 
                 return;
             }
 
-            var scoreToIncrement = Scores.First(x => x.UserId == user.Id);
+            var scoreToIncrement = scores.First(x => x.UserId == user.Id);
             scoreToIncrement.CurrentScore += 1;
+            
+            if (indexToUpdate != -1)
+                ServerScores[indexToUpdate].UserScores = scores;
 
             await SaveLeaderboard();
         }
 
         private async Task UpdateLeaderboard()
         {
-            Scores = JsonConvert.DeserializeObject<List<Score>>(await File.ReadAllTextAsync("./data/scores.json"));
+            ServerScores = JsonConvert.DeserializeObject<List<ServerScores>>(await File.ReadAllTextAsync("./data/scores.json"));
         }
 
         private async Task SaveLeaderboard()
         {
-            var stringToSave = JsonConvert.SerializeObject(Scores, Formatting.Indented);
+            var stringToSave = JsonConvert.SerializeObject(ServerScores, Formatting.Indented);
             await File.WriteAllTextAsync("./data/scores.json", stringToSave);
         }
     }
