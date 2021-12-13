@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using DeathrollBot.Interfaces;
+using DeathrollBot.Services;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -15,6 +17,9 @@ namespace DeathrollBot
 
         private DiscordSocketClient _client;
         private CommandService _commands;
+
+        private ILeaderboardService _leaderboardService;
+
         private IServiceProvider _services;
 
         private async Task MainAsync()
@@ -24,9 +29,12 @@ namespace DeathrollBot
 
             _commands = new CommandService();
 
+            _leaderboardService = new LeaderboardService();
+
             _services = new ServiceCollection()
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
+                .AddSingleton(_leaderboardService)
                 .BuildServiceProvider();
 
             var token = Environment.GetEnvironmentVariable("token");
